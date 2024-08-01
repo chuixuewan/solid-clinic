@@ -1,32 +1,152 @@
 PREFIX fhir: <http://hl7.org/fhir/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-BASE <http://hl7.org/fhir/>
-# Define the main shape
-<meta> {
-    fhir:versionId xsd:string;                         # Version specific identifier
-    fhir:lastUpdated xsd:dateTime;                     # When the resource version last changed
-    fhir:source xsd:anyURI;                            # Identifies where the resource comes from
-    fhir:profile xsd:anyURI*;                          # Profiles this resource claims to conform to (0 or more)
-    fhir:security xsd:token*;                          # Security Labels applied to this resource (0 or more)
-    fhir:tag xsd:token*                                # Tags applied to this resource (0 or more)
+PREFIX cli:<http://solid-clinic/>
+BASE <http://hl7.org/fhir/shape/>
+
+<Observation> CLOSED {
+    fhir:Observation_resourceType xsd:string;
+    fhir:Observation_identifier xsd:string;
+    fhir:Observation_meta @<Meta>?;
+    fhir:Observation_status xsd:string;
+    fhir:Observation_performer IRI;
+    fhir:Observation_category xsd:string;
+    fhir:Observation_code @<Code>;
+    fhir:Observation_subject IRI;
+    fhir:Observation_encounter IRI;
+    fhir:Observation_effectiveDateTime xsd:dateTime;
+    fhir:Observation_issued xsd:dateTime;
+    fhir:Observation_quantityValue xsd:decimal;
+    fhir:Observation_quantityUnit xsd:string;
+    fhir:Observation_quantitySystem xsd:anyURI?;
+    fhir:Observation_quantityCode xsd:string?
 }
 
-
-<resource> {
-    fhir:id xsd:string?;                             # Logical id of this artifact
-    fhir:meta @<MetaShape>?;                              # Metadata about the resource
-    fhir:implicitRules xsd:anyURI?;                  # A set of rules under which this content was created
-    fhir:language xsd:token?                         # Language of the resource content
+<Encounter> CLOSED {
+    fhir:Encounter_identifier xsd:string;
+    fhir:Encounter_status xsd:string;
+    fhir:Encounter_participant IRI*; 
+    fhir:Encounter_diagnosis xsd:string;
+    fhir:Encounter_account IRI;
+    fhir:Encounter_start xsd:dateTime;
+    fhir:Encounter_end xsd:dateTime;
 }
 
-<patient> {
+<Clinic_Doctor> CLOSED {
+    <Doctor_webId> xsd:string;
+}
+
+<MyPatients> CLOSED{
+    cli:MyPatients IRI*;
+}
+
+<Patient> CLOSED {
+    fhir:Patient_resourceType xsd:string;
+    fhir:Patient_identifier xsd:string;
+    fhir:Patient_active xsd:boolean?;
+    fhir:Patient_name xsd:string*;
+    fhir:Patient_telecom @<ContactPoint>*;
+    fhir:Patient_gender xsd:string;
+    fhir:Patient_birthDate xsd:date?;
+    fhir:Patient_deceasedBoolean xsd:boolean?;
+    fhir:Patient_address @<Address>*;
+    fhir:Patient_photo IRI?;
+    fhir:Patient_contact @<Contact>*;
+    fhir:Patient_generalPractitioner IRI*;
+    fhir:Patient_managingOrganization IRI?;
+}
+
+<Practitioner> CLOSED {
+    fhir:Practitioner_resourceType xsd:string;
+    fhir:Practitioner_identifier xsd:string;
+    fhir:Practitioner_active xsd:boolean?;
+    fhir:Practitioner_name xsd:string*;
+    fhir:Practitioner_telecom @<ContactPoint>*;
+    fhir:Practitioner_gender xsd:string;
+    fhir:Practitioner_photo IRI?;
+    fhir:Practitioner_qualification IRI?;
+}
+
+<TimeSlot> CLOSED {
+    fhir:identifier xsd:string;
+    fhir:status xsd:boolean; # [free, reserved]
+    fhir:start xsd:dateTime;
+    fhir:end xsd:dateTime;
+    fhir:location xsd:string;
+    fhir:release IRI;
+    fhir:book IRI?;
+}
+<Appointment> CLOSED {
+
+
+    fhir:Appointment_identifier xsd:string;
+    fhir:Appointment_status xsd:boolean; # [free, reserved]
+    fhir:Appointment_start xsd:dateTime;
+    fhir:Appointment_end xsd:dateTime;
+    fhir:Appointment_location xsd:string;
+    fhir:Appointment_patient IRI;
+    fhir:Appointment_doctor IRI;
     
-    fhir:active xsd:boolean?;
-    fhir:name   xsd:string?;
-    fhir:telecom xsd:string*;
-    fhir:gender xsd:string?;
-    fhir:birthDate xsd:dateTime?;
-    <photo> IRI ?;
-    <record> xsd:string?;
+}
 
+
+<Address> CLOSED {
+    fhir:Address_use xsd:string?;
+    fhir:Address_type xsd:string?;
+    fhir:Address_text xsd:string?;
+    fhir:Address_line xsd:string*;
+    fhir:Address_city xsd:string?;
+    fhir:Address_district xsd:string?;
+    fhir:Address_state xsd:string?;
+    fhir:Address_postalCode xsd:string?;
+    fhir:Address_country xsd:string?;
+    fhir:Address_period @<Period>?;
+}
+
+<Period> CLOSED {
+    fhir:Period_start xsd:dateTime?;
+    fhir:Period_end xsd:dateTime?;
+}
+
+<Contact> CLOSED {
+    fhir:Contact_name xsd:string?;
+    fhir:Contact_telecom @<ContactPoint>*;
+    fhir:Contact_address @<Address>?;
+    fhir:Contact_gender xsd:string?;
+}
+
+<ContactPoint> CLOSED {
+    fhir:ContactPoint_value xsd:string?
+}
+
+
+<Meta> CLOSED {
+    fhir:Meta_profile @<Profile>*
+}
+
+<Profile> CLOSED {
+    fhir:Profile_value xsd:anyURI
+}
+
+<Quantity> CLOSED {
+    fhir:Quantity_value xsd:decimal;
+    fhir:Quantity_unit xsd:string?;
+    fhir:Quantity_system xsd:anyURI?;
+    fhir:Quantity_code xsd:string?
+}
+
+<Category> CLOSED {
+    fhir:Category_coding @<Coding>*
+}
+
+<Code> CLOSED {
+    fhir:Code_coding @<Coding>*;
+    fhir:Code_text xsd:string?
+}
+
+
+
+<Coding> CLOSED {
+    fhir:Coding_system xsd:anyURI;
+    fhir:Coding_code xsd:string;
+    fhir:Coding_display xsd:string?
 }

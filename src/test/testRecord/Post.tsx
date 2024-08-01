@@ -1,17 +1,18 @@
 import { FunctionComponent, useCallback, useMemo } from "react";
 import { ContainerUri, LeafUri } from "@ldo/solid";
 import { useLdo, useResource, useSubject } from "@ldo/solid-react";
-import { PatientShapeShapeType } from "../../.ldo/fhir.shapeTypes";
+import { PatientShapeType } from "../../.ldo/fhir.shapeTypes";
 
 export const Post: FunctionComponent<{ postUri: ContainerUri }> = ({
   postUri,
 }) => {
   const postIndexUri = `${postUri}index.ttl`;
+  console.log(postIndexUri);
   const postResource = useResource(postIndexUri);
-  const patient = useSubject(PatientShapeShapeType, postIndexUri);
+  const patient = useSubject(PatientShapeType, postIndexUri);
   const { getResource } = useLdo();
   const imageResource = useResource(
-    patient?.photo?.["@id"] as LeafUri | undefined
+    patient?.PatientPhoto?.["@id"] as LeafUri | undefined
   );
 
   // Convert the blob into a URL to be used in the img tag
@@ -33,9 +34,9 @@ export const Post: FunctionComponent<{ postUri: ContainerUri }> = ({
 
   return (
     <div>
-      <p>{patient.record}</p>
+      <p>{patient.PatientName}</p>
       {blobUrl && (
-        <img src={blobUrl} alt={patient.record} style={{ height: 300 }} />
+        <img src={blobUrl} style={{ height: 300 }} />
       )}
       <button onClick={deletePost}>Delete Post</button>
     </div>

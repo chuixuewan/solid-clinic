@@ -2,7 +2,7 @@ import { FormEvent, FunctionComponent, useCallback, useState } from "react";
 import { Container, Leaf, LeafUri } from "@ldo/solid";
 import { v4 } from "uuid";
 import { useLdo } from "@ldo/solid-react";
-import { PatientShapeShapeType } from "../../.ldo/fhir.shapeTypes";
+import { PatientShapeType } from "../../.ldo/fhir.shapeTypes";
 
 export const MakePost: FunctionComponent<{ mainContainer?: Container }> = ({
   mainContainer,
@@ -24,13 +24,14 @@ export const MakePost: FunctionComponent<{ mainContainer?: Container }> = ({
       const postContainerResult = await mainContainer.createChildAndOverwrite(
         `${v4()}/`
       );
+      
       // Check if there was an error
       if (postContainerResult.isError) {
         alert(postContainerResult.message);
         return;
       }
+      
       const postContainer = postContainerResult.resource;
-
       // Upload Image
       let uploadedImage: Leaf | undefined;
       if (selectedFile) {
@@ -52,17 +53,17 @@ export const MakePost: FunctionComponent<{ mainContainer?: Container }> = ({
       // Create new data of type "Post" where the subject is the index
       // resource's uri, and write any changes to the indexResource.
       const patient = createData(
-        PatientShapeShapeType,
+        PatientShapeType,
         indexResource.uri,
         indexResource
       );
       // Set the article body
-      patient.name = "ZJT";
+      patient.PatientName?.push ("ZJT");
       if (uploadedImage) {
         // Link the URI to the 
-        patient.photo = { "@id": uploadedImage.uri };
+        patient.PatientPhoto = { "@id": uploadedImage.uri };
       }
-      patient.record = "everything is all right!!";
+      
     
       // The commitData function handles sending the data to the Pod.
       const result = await commitData(patient);

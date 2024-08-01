@@ -1,0 +1,10 @@
+.appointmentCard {
+    margin: 20px;
+    cursor: pointer;
+  }
+  
+  .appointmentRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }

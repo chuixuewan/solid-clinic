@@ -1,0 +1,23 @@
+.doctorDetailContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  
+  .doctorInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .doctorPhoto {
+    width: 100%;
+    height: auto;
+  }
+  
+  .doctorDescription {
+    text-align: center;
+    margin-top: 1rem;
+  }
+  

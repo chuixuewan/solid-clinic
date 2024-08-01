@@ -1,0 +1,24 @@
+.appointmentListContainer {
+  padding: 2rem;
+}
+
+.card {
+  width: 100%;
+  margin-bottom: 1rem;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.cardHeader {
+  background-color: #e0f7fa; /* Light cyan */
+  padding: 1rem;
+}
+
+.cardContent {
+  padding: 1rem;
+}
+
+  

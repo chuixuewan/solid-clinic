@@ -1,0 +1,23 @@
+.card {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card:active {
+  transform: scale(0.95);
+}
+.cardTimeSlots {
+  background-color: #a1e4ec; /* Light cyan */
+}
+
+.cardAppointments {
+  background-color: #f7bbcf; /* Light pink */
+}
+
+.cardPatients {
+  background-color: #acf1b2; /* Light green */
+}

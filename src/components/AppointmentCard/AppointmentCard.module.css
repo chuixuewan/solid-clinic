@@ -1,0 +1,21 @@
+.appointmentCard {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    margin: 8px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .appointmentRow {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 0;
+  }
+  
+  .appointmentRow span {
+    font-weight: bold;
+  }
+  

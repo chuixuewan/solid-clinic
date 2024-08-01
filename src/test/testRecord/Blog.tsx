@@ -19,7 +19,6 @@ function getStringBeforeProfile(input: string): string {
 export const Blog: FunctionComponent = () => {
   const { session } = useSolidAuth();
   const { getResource } = useLdo();
-
   const [mainContainerUri, setMainContainerUri] = useState<ContainerUri | undefined>();
   const [agent, setAgent] = useState<string>(session.webId as string);
   const [newPodUri, setNewPodUri] = useState<string>(session.webId as string);
